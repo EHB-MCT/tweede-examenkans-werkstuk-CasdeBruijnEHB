@@ -20,7 +20,7 @@ async function getData() {
     const response = await fetch('https://thecrew.cc/news/read.php');
     const data = await response.json();
     //console.log("zwei", data);
-    //console.log(data.news[0].content);
+    //console.log(data.news[0].imageURI);
     //console.log("lengte", data.news.length);
 
     //De gegevens uit de API uitlezen.
@@ -42,7 +42,6 @@ function displayHTML(dataArtikels) {
     //Vervolgens de HTML toevoegen aan de container
     let containerElement = document.getElementById('container');
     let htmlInhoud = "";
-    console.log(dataArtikels[0].artikelTekst);
     dataArtikels.forEach((element) => {
         htmlInhoud += `
             <div class="flexboxItem">

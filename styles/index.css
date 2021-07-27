@@ -1,6 +1,6 @@
 /*General CSS*/
 body {
-  font-family: sans-serif;
+  font-family: 'STIX Two Math';
   padding: 20px;
 }
 
@@ -25,8 +25,11 @@ main {
 
 .flexboxItem {
   width: 45%;
-  padding: 2%;
+  margin: 0.5%;
+  padding: 1%;
   height: auto;
+  background-color: honeydew;
+  border-radius: 5px;
 }
 
 /*Titel artikel*/
@@ -49,12 +52,18 @@ img {
 
 p strong {
   display: block;
-  padding: 5%;
-  padding-top: 2%;
+  padding: 1%;
   font-style: italic;
+  font-size: smaller;
 }
 
 /*Artikel tekst*/
+p {
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+}
+
 hr {
   margin-top: 1%;
   /*margin-bottom:2%;*/
@@ -64,6 +73,12 @@ h4 {
   padding-top: 2%;
 }
 
-ul li {
+ul,
+ol {
+  padding-left: 3%;
+}
+
+ul li,
+ol li {
   padding-top: 2%;
 }
