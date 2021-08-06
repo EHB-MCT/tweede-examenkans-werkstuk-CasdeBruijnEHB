@@ -12,7 +12,46 @@ body {
 
 main {
   margin: auto;
-  display: flex;
+
+}
+
+/*HEADER*/
+@font-face {
+  font-family: Chomsky;
+  src: url(Fonts\Chomsky.otf);
+}
+
+header {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: x-large;
+  padding-bottom: 3%;
+}
+
+#hoofdTitel {
+  font-family: Chonburi;
+  padding-bottom: 4%;
+}
+
+.buttonsHeader {
+  font-family: 'STIX Two Math';
+  font-size: large;
+  font-weight: lighter;
+  background-color: transparent;
+  border: none;
+  transition: border-bottom 3s;
+  padding: 1%;
+  padding-bottom: 0%;
+}
+
+.buttonsHeader:hover {
+  border-bottom: 2px solid black;
+
+}
+
+#addArticle a {
+  text-decoration: none;
 }
 
 /* CSS voor flexbox*/
@@ -37,6 +76,20 @@ h1 {
   align-items: center;
   padding: 5%;
   padding-top: 2%;
+}
+
+/* Like knop, hartje */
+.iconHeart {
+  width: 2%;
+  margin-left: 2%;
+  position: absolute;
+
+}
+
+.likesTekst {
+  font-weight: 500;
+  margin-top: 1%;
+  margin-left: 8%
 }
 
 /* Foto's van de artikels*/
