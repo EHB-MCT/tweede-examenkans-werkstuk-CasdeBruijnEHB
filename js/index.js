@@ -2,11 +2,6 @@
 console.log("test");
 let arrayKnoppenLikes = [];
 
-/*
-fetch('https://thecrew.cc/news/read.php')
-    .then(response => response.json())
-    .then(data => console.log("jen", data));
-*/
 class Artikels {
     constructor(artikelUUID, artikelTitel, artikelFoto, artikelTekst, artikelLikes, artikelDatum) {
         this.artikelUUID = artikelUUID;
@@ -18,6 +13,8 @@ class Artikels {
         this.artikelDatum = artikelDatum;
     }
 }
+
+
 let arraySorted = [];
 let arrayArtikels = [];
 async function getData() {
@@ -66,7 +63,6 @@ function displayHTML(dataArtikels) {
             <div class="flexboxItem">
             <img src='./Icons/1200px-Heart_corazón.svg.png' class='iconHeart'>
             <p class="likesTekst">${element.artikelLikes}</p>
-            <p class="likesTekst">${element.artikelUUID}</p>
             <button class="likeKnop">Like</button>
             <h1 class="titel">${element.artikelTitel}</h1>
             <img src='${element.artikelFoto}' class="artikelFoto">
@@ -96,13 +92,14 @@ function likeBlogPost(id) {
     fetch(`https://thecrew.cc/news/create.php`, {
             method: 'POST',
             body: JSON.stringify({
-                /*message: `{ "UUID": ${id}}`*/
-                id
+                "UUID": id
             })
         })
-
+        .then(response => {
+            return response.json();
+        })
         .then(data => {
-            console.log("test", data);
+            console.log(data);
         });
 }
 
