@@ -8,13 +8,14 @@ fetch('https://thecrew.cc/news/read.php')
     .then(data => console.log("jen", data));
 */
 class Artikels {
-    constructor(artikelUUID, artikelTitel, artikelFoto, artikelTekst, artikelLikes) {
+    constructor(artikelUUID, artikelTitel, artikelFoto, artikelTekst, artikelLikes, artikelDatum) {
         this.artikelUUID = artikelUUID;
         this.artikelTitel = artikelTitel;
         this.artikelFoto = artikelFoto;
         //this.artikelIntro = artikelIntro;
         this.artikelTekst = artikelTekst;
         this.artikelLikes = artikelLikes;
+        this.artikelDatum = artikelDatum;
     }
 }
 let arraySorted = [];
@@ -23,8 +24,7 @@ async function getData() {
     const response = await fetch('https://thecrew.cc/news/read.php');
     const data = await response.json();
     //console.log("zwei", data);
-    //console.log(data.news[0].imageURI);
-    //console.log("lengte", data.news.length);
+
 
     //De gegevens uit de API uitlezen.
     //Vervolgens alle gegevens in een klasse plaatsen en deze klassen verzamelen in een array
@@ -37,19 +37,20 @@ async function getData() {
         arraySorted.push(artikel);
     }
 
-    //Een extra array voor de sorted zaken
+    //Een extra array voor de sorted array
     arraySorted.sort((a, b) => b.artikelLikes - a.artikelLikes);
     displayHTML(arrayArtikels);
 
 
     /*Filter knoppen, aanpassen HTLM na klik op knop*/
-    document.getElementById('btnNoFilter').addEventListener('click', function () {
+    let btnNofilter = document.getElementById('btnNoFilter');
+    let btnFilter = document.getElementById('btnFilterLikes');
+    btnNofilter.addEventListener('click', function () {
         displayHTML(arrayArtikels);
 
     });
-    document.getElementById('btnFilterLikes').addEventListener('click', function () {
+    btnFilter.addEventListener('click', function () {
         displayHTML(arraySorted);
-
     });
     return await data;
 }
@@ -79,6 +80,7 @@ function displayHTML(dataArtikels) {
     containerElement.innerHTML = htmlInhoud;
     let likeKnoppen = document.getElementsByClassName('likeKnop');
 
+    //Like knoppen functie
     for (let i = 0; i < likeKnoppen.length; i++) {
         likeKnoppen[i].addEventListener('click', function () {
             console.log("Hallo", dataArtikels[i].artikelUUID);
@@ -102,4 +104,44 @@ function likeBlogPost(id) {
         .then(data => {
             console.log("test", data);
         });
+}
+
+
+
+//Searchbar knoppen - hier wordt aan de verschillende knoppen naargelang de manier van filteren een eventlistener toegevoegd.
+//De variabele FilterKeuze wordt gebruikt voor aan te geven op welke manier de gebruiker wilt filteren.
+let searchInputButton = document.getElementById("searchInput");
+let zoekFilterKeuze = "zoekTitel";
+let zoekFilterKnoppen = document.getElementsByClassName('buttonSearchFilter');
+for (let i = 0; i < zoekFilterKnoppen.length; i++) {
+    zoekFilterKnoppen[i].addEventListener('click', function (e) {
+        zoekFilterKeuze = e.target.id;
+        searchBar();
+    });
+}
+
+//Event listener toevoegen aan de searchbar
+searchInputButton.addEventListener("keyup", function () {
+    searchBar();
+});
+
+
+//De searchbar functie die wordt aangeroepen na elke toets
+function searchBar() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    /*
+    Filter functie. Hier wordt de array gefilterd, en het gefilterd resultaat in filteredVariabelen array gestopt.
+    Eerst kijkt de functie naar de variabele 'zoekFilterKeuze'. Deze variabelen wordt aangepast naargelang de keuze van
+    filter manier.
+    */
+    const filteredVariablen = arrayArtikels.filter(character => {
+        if (zoekFilterKeuze == "zoekTitelContent") {
+            return character.artikelTitel.toLowerCase().includes(input) || character.artikelTekst.toLowerCase().includes(input);
+        } else if (zoekFilterKeuze == "zoekContent") {
+            return character.artikelTekst.toLowerCase().includes(input);
+        } else {
+            return character.artikelTitel.toLowerCase().includes(input);
+        }
+    });
+    displayHTML(filteredVariablen);
 }
