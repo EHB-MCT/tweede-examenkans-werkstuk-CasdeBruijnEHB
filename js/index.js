@@ -1,5 +1,4 @@
 "use strict";
-console.log("test");
 let arrayKnoppenLikes = [];
 
 class Artikels {
@@ -7,7 +6,6 @@ class Artikels {
         this.artikelUUID = artikelUUID;
         this.artikelTitel = artikelTitel;
         this.artikelFoto = artikelFoto;
-        //this.artikelIntro = artikelIntro;
         this.artikelTekst = artikelTekst;
         this.artikelLikes = artikelLikes;
         this.artikelDatum = artikelDatum;
@@ -20,7 +18,6 @@ let arrayArtikels = [];
 async function getData() {
     const response = await fetch('https://thecrew.cc/news/read.php');
     const data = await response.json();
-    console.log("zwei", data.news[2].content);
 
 
     //De gegevens uit de API uitlezen.
@@ -65,7 +62,7 @@ function displayHTML(dataArtikels) {
     let containerElement = document.getElementById('container');
     let htmlInhoud = "";
     dataArtikels.forEach((element) => {
-        //Dit is voor alleen de inleiding uit de tekst te halen
+        //Dit is voor de inleiding uit de tekst te halen
         let inleidingStart = "<strong>";
         let inleidingStop = "</strong>";
         let inleiding = element.artikelTekst.slice(element.artikelTekst.indexOf(inleidingStart), element.artikelTekst.indexOf(inleidingStop) + inleidingStop.length);
@@ -111,7 +108,6 @@ function displayHTML(dataArtikels) {
             if (arrayKnoppenGeklikt.includes(i)) {
                 alert("Je hebt deze post al geliked!");
             } else {
-                console.log("likeknop", likeKnoppen[i]);
                 likeBlogPost(dataArtikels[i].artikelUUID);
                 likeKnoppen[i].innerHTML = `
             <img id="thumbsUpIcon" src="Icons/ThumbsUp2.png">
@@ -124,7 +120,6 @@ function displayHTML(dataArtikels) {
     //Een leesmeer knopje voor als het hele artikel gezien moet worden
     let leesMeerKnoppen = document.getElementsByClassName("leesMeer");
     let artikelTekstDivs = document.getElementsByClassName("artikelTekst");
-    console.log(leesMeerKnoppen);
     for (let i = 0; i < leesMeerKnoppen.length; i++) {
         leesMeerKnoppen[i].addEventListener('click', function (event) {
             artikelTekstDivs[i].innerHTML = dataArtikels[i].artikelTekst;
@@ -132,7 +127,6 @@ function displayHTML(dataArtikels) {
     }
 
 }
-
 
 function likeBlogPost(id) {
     console.log(id);
@@ -155,7 +149,7 @@ function likeBlogPost(id) {
 //Searchbar knoppen - hier wordt aan de verschillende knoppen naargelang de manier van filteren een eventlistener toegevoegd.
 //De variabele FilterKeuze wordt gebruikt voor aan te geven op welke manier de gebruiker wilt filteren. Dus op titel, content of beide.
 let searchInputButton = document.getElementById("searchInput");
-let zoekFilterKeuze = "zoekTitel";
+let zoekFilterKeuze = "zoekTitel"; //Dit is de standaard manier van zoeken - op titel
 let zoekFilterKnoppen = document.getElementsByClassName('buttonSearchFilter');
 for (let i = 0; i < zoekFilterKnoppen.length; i++) {
     zoekFilterKnoppen[i].addEventListener('click', function (e) {
