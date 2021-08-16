@@ -35,7 +35,6 @@ async function getData() {
     arraySorted.sort((a, b) => b.artikelLikes - a.artikelLikes);
     displayHTML(arrayArtikels);
 
-
     /*Filter knoppen, aanpassen HTLM na klik op knop*/
     let btnNoFilter = document.getElementById('btnNoFilter');
     let btnFilter = document.getElementById('btnFilterLikes');
