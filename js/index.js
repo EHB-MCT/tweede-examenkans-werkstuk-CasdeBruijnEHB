@@ -71,7 +71,7 @@ function displayHTML(dataArtikels) {
             <p class="likesTekst">${element.artikelLikes}</p>
             </div>
             <div class="likeDiv">
-            <img id="thumbsUpIcon" src="Icons/ThumbsUppng.png">
+            <img id="thumbsUpIcon" src="Icons/ThumbsUp1.png">
             <p class="likeKnop"> Like</p>
             </div>
             </div>
@@ -87,11 +87,22 @@ function displayHTML(dataArtikels) {
     containerElement.innerHTML = htmlInhoud;
     let likeKnoppen = document.getElementsByClassName('likeDiv');
 
+    //Een array voor na te kijken of er al op de like knop geklikt was
+    let arrayKnoppenGeklikt = [];
     //Like knoppen functie
     for (let i = 0; i < likeKnoppen.length; i++) {
-        likeKnoppen[i].addEventListener('click', function () {
-            console.log("Hallo", dataArtikels[i].artikelUUID);
-            likeBlogPost(dataArtikels[i].artikelUUID);
+        likeKnoppen[i].addEventListener('click', function (event) {
+            if (arrayKnoppenGeklikt.includes(i)) {
+                alert("Je hebt deze post al geliked!");
+            } else {
+                console.log("likeknop", likeKnoppen[i]);
+                likeBlogPost(dataArtikels[i].artikelUUID);
+                likeKnoppen[i].innerHTML = `
+            <img id="thumbsUpIcon" src="Icons/ThumbsUp2.png">
+            <p class="likeKnop"> Liked!</p>`;
+                arrayKnoppenGeklikt.push(i);
+            }
+
         });
     }
 
