@@ -43,12 +43,14 @@ async function getData() {
     let btnNoFilter = document.getElementById('btnNoFilter');
     let btnFilter = document.getElementById('btnFilterLikes');
     btnNoFilter.addEventListener('click', function () {
+        document.getElementById("searchInput").value = "";
         btnNoFilter.setAttribute('class', 'buttonsHeader classButtonActive');
         btnFilter.setAttribute('class', 'buttonsHeader classButtonNotActive');
         displayHTML(arrayArtikels);
 
     });
     btnFilter.addEventListener('click', function () {
+        document.getElementById("searchInput").value = "";
         btnFilter.setAttribute('class', 'buttonsHeader classButtonActive');
         btnNoFilter.setAttribute('class', 'buttonsHeader classButtonNotActive');
         displayHTML(arraySorted);
@@ -151,7 +153,7 @@ function likeBlogPost(id) {
 
 
 //Searchbar knoppen - hier wordt aan de verschillende knoppen naargelang de manier van filteren een eventlistener toegevoegd.
-//De variabele FilterKeuze wordt gebruikt voor aan te geven op welke manier de gebruiker wilt filteren.
+//De variabele FilterKeuze wordt gebruikt voor aan te geven op welke manier de gebruiker wilt filteren. Dus op titel, content of beide.
 let searchInputButton = document.getElementById("searchInput");
 let zoekFilterKeuze = "zoekTitel";
 let zoekFilterKnoppen = document.getElementsByClassName('buttonSearchFilter');
