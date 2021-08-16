@@ -20,7 +20,7 @@ let arrayArtikels = [];
 async function getData() {
     const response = await fetch('https://thecrew.cc/news/read.php');
     const data = await response.json();
-    //console.log("zwei", data);
+    console.log("zwei", data.news[2].content);
 
 
     //De gegevens uit de API uitlezen.
@@ -29,7 +29,7 @@ async function getData() {
     arrayArtikels = [];
 
     for (let i = 0; i < arrayLengte; i++) {
-        let artikel = new Artikels(data.news[i].UUID, data.news[i].title, data.news[i].imageURI, data.news[i].content, data.news[i].likes);
+        let artikel = new Artikels(data.news[i].UUID, data.news[i].title, data.news[i].imageURI, data.news[i].content, data.news[i].likes, data.news[i].publicationDate);
         arrayArtikels.push(artikel);
         arraySorted.push(artikel);
     }
@@ -63,6 +63,20 @@ function displayHTML(dataArtikels) {
     let containerElement = document.getElementById('container');
     let htmlInhoud = "";
     dataArtikels.forEach((element) => {
+        //Dit is voor alleen de inleiding uit de tekst te halen
+        let inleidingStart = "<strong>";
+        let inleidingStop = "</strong>";
+        let inleiding = element.artikelTekst.slice(element.artikelTekst.indexOf(inleidingStart), element.artikelTekst.indexOf(inleidingStop) + inleidingStop.length);
+        /*
+        Niet elke tekst heeft een inleiding. Voor niet gewoon enkel een foto te laten zien, pakken we indien er niks staat 
+        de eerste paragraaf als inleiding
+        */
+        if (inleiding.length < 100) {
+            inleidingStart = "<p>";
+            inleidingStop = "</p>";
+            inleiding = element.artikelTekst.slice(element.artikelTekst.indexOf(inleidingStart), element.artikelTekst.indexOf(inleidingStop) + inleidingStop.length);
+        }
+        inleiding += `<small class="leesMeer">Lees meer...</small>`;
         htmlInhoud += `
             <div class="flexboxItem">
             <div id="favorietenContainer">
@@ -77,7 +91,7 @@ function displayHTML(dataArtikels) {
             </div>
             <h1 class="titel">${element.artikelTitel}</h1>
             <img src='${element.artikelFoto}' class="artikelFoto">
-             <p class="artikelTekst">${element.artikelTekst}</p>
+             <p class="artikelTekst">${inleiding}</p>
              </div>
              `;
 
@@ -102,7 +116,16 @@ function displayHTML(dataArtikels) {
             <p class="likeKnop"> Liked!</p>`;
                 arrayKnoppenGeklikt.push(i);
             }
+        });
+    }
 
+    //Een leesmeer knopje voor als het hele artikel gezien moet worden
+    let leesMeerKnoppen = document.getElementsByClassName("leesMeer");
+    let artikelTekstDivs = document.getElementsByClassName("artikelTekst");
+    console.log(leesMeerKnoppen);
+    for (let i = 0; i < leesMeerKnoppen.length; i++) {
+        leesMeerKnoppen[i].addEventListener('click', function (event) {
+            artikelTekstDivs[i].innerHTML = dataArtikels[i].artikelTekst;
         });
     }
 
