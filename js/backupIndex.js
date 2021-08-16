@@ -40,17 +40,12 @@ async function getData() {
 
 
     /*Filter knoppen, aanpassen HTLM na klik op knop*/
-    let btnNoFilter = document.getElementById('btnNoFilter');
+    let btnNofilter = document.getElementById('btnNoFilter');
     let btnFilter = document.getElementById('btnFilterLikes');
-    btnNoFilter.addEventListener('click', function () {
-        btnNoFilter.setAttribute('class', 'buttonsHeader classButtonActive');
-        btnFilter.setAttribute('class', 'buttonsHeader classButtonNotActive');
+    btnNofilter.addEventListener('click', function () {
         displayHTML(arrayArtikels);
-
     });
     btnFilter.addEventListener('click', function () {
-        btnFilter.setAttribute('class', 'buttonsHeader classButtonActive');
-        btnNoFilter.setAttribute('class', 'buttonsHeader classButtonNotActive');
         displayHTML(arraySorted);
     });
     return await data;
@@ -65,16 +60,9 @@ function displayHTML(dataArtikels) {
     dataArtikels.forEach((element) => {
         htmlInhoud += `
             <div class="flexboxItem">
-            <div id="favorietenContainer">
-            <div id="favoHeartDiv">
             <img src='./Icons/1200px-Heart_corazón.svg.png' class='iconHeart'>
             <p class="likesTekst">${element.artikelLikes}</p>
-            </div>
-            <div class="likeDiv">
-            <img id="thumbsUpIcon" src="Icons/ThumbsUppng.png">
-            <p class="likeKnop"> Like</p>
-            </div>
-            </div>
+            <button class="likeKnop">Like</button>
             <h1 class="titel">${element.artikelTitel}</h1>
             <img src='${element.artikelFoto}' class="artikelFoto">
              <p class="artikelTekst">${element.artikelTekst}</p>
@@ -85,7 +73,7 @@ function displayHTML(dataArtikels) {
 
     containerElement.innerHTML = "";
     containerElement.innerHTML = htmlInhoud;
-    let likeKnoppen = document.getElementsByClassName('likeDiv');
+    let likeKnoppen = document.getElementsByClassName('likeKnop');
 
     //Like knoppen functie
     for (let i = 0; i < likeKnoppen.length; i++) {
@@ -142,8 +130,14 @@ function searchBar() {
     Eerst kijkt de functie naar de variabele 'zoekFilterKeuze'. Deze variabelen wordt aangepast naargelang de keuze van
     filter manier.
     */
+    /*
+    document.getElementById('zoekTitelContent').setAttribute('class', 'buttonSearchFilter classButtonActive');
+            document.getElementById('zoekContent').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
+            document.getElementById('zoekTitel').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
+    */
     const filteredVariablen = arrayArtikels.filter(character => {
         if (zoekFilterKeuze == "zoekTitelContent") {
+            
             return character.artikelTitel.toLowerCase().includes(input) || character.artikelTekst.toLowerCase().includes(input);
         } else if (zoekFilterKeuze == "zoekContent") {
             return character.artikelTekst.toLowerCase().includes(input);
@@ -152,19 +146,4 @@ function searchBar() {
         }
     });
     displayHTML(filteredVariablen);
-
-    //Edit CSS on click 
-    if (zoekFilterKeuze == "zoekTitelContent") {
-        document.getElementById('zoekTitelContent').setAttribute('class', 'buttonSearchFilter classButtonActive');
-        document.getElementById('zoekContent').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-        document.getElementById('zoekTitel').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-    } else if (zoekFilterKeuze == "zoekContent") {
-        document.getElementById('zoekTitelContent').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-        document.getElementById('zoekContent').setAttribute('class', 'buttonSearchFilter classButtonActive');
-        document.getElementById('zoekTitel').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-    } else {
-        document.getElementById('zoekTitelContent').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-        document.getElementById('zoekContent').setAttribute('class', 'buttonSearchFilter classButtonNotActive');
-        document.getElementById('zoekTitel').setAttribute('class', 'buttonSearchFilter classButtonActive');
-    }
 }
